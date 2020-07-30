@@ -1,6 +1,55 @@
+h1{
+    color: #45455d;
+    margin-left: 10%;
+    margin-top: 5%;
+    font-weight: 400;
+}
 table{
    display: flex;
 }
 th{
     background: #fafbfc;
+    border: none;
+}
+section{
+    border: 1px solid #ffffff;
+    box-shadow: 0px 5px 10px 0px #0000001e;
+    border-radius: 5px;
+    width: 80%;
+    min-height: 90%;
+    margin-left: 10%;
+    padding: 1em;
+}
+.upload{
+    /* background: #fafbfc;
+    width: 95%;
+    height: 70%; */
+    margin-top: 30%;
+    margin-left: 30%;
+}
+th,td{
+    padding: 1em;
+}
+td{
+    text-align: center;
+    border-bottom: 1px solid #f2f2f4;
+}
+button{
+    height: 5vh;
+    width: 10vw;
+    background: #e3843b;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+.table-heading{
+    display: flex;
+    justify-content: space-between;
+}
+.save{
+    width: 7vw;
+    margin-top: 1%;
+}
+h2{
+    color: #a0a1a7;
 }

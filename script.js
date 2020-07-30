@@ -1,6 +1,6 @@
 function upload() {
     //Reference the FileUpload element.
-    const fileUpload = document.getElementById("fileUpload");
+    const fileUpload = document.getElementById("file-upload");
 
     //Validate whether File is valid Excel file.
     const regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
@@ -32,6 +32,7 @@ function upload() {
     } else {
         alert("Please upload a valid Excel file.");
     }
+    displaySection();
 };
 function processExcel(data) {
     //Read the Excel File data.
@@ -92,9 +93,10 @@ function processExcel(data) {
     headerCell = document.createElement("th");
     headerCell.innerHTML = "Transport Allowance";
     row.appendChild(headerCell);
-
-    // if(headerCell.innerHTML !== "Fullname" && "Phone Number" && "Address" && "State" && "LGA" && "Date of Birth" && "Salary"
-    //     && "Gender" && "Call Allowance" && "Transport Allowance") {
+     
+    //check if the headers match the headers of the csv file
+    // if(headerCell.innerText !== "Fullname" && "Phone Number" && "Address" && "State" && "LGA" && "Date of Birth" && "Salary" 
+    // && "Gender" && "Call Allowance" && "Transport Allowance") {
     //     alert("please upload excel file that matches the headers")
     //     return null;
     // }
@@ -110,7 +112,7 @@ function processExcel(data) {
         cell.innerHTML = excelRows[i].Fullname;
 
         cell = row.insertCell(-1);
-        cell.innerHTML = excelRows[i].Phone_Number;
+        cell.innerHTML = excelRows[i]["Phone Number"];
 
         cell = row.insertCell(-1);
         cell.innerHTML = excelRows[i].Address;
@@ -122,7 +124,7 @@ function processExcel(data) {
         cell.innerHTML = excelRows[i].LGA;
 
         cell = row.insertCell(-1);
-        cell.innerHTML = excelRows[i].DateofBirth;
+        cell.innerHTML = excelRows[i]["Date of Birth"];
 
         cell = row.insertCell(-1);
         cell.innerHTML = excelRows[i].Salary;
@@ -131,13 +133,36 @@ function processExcel(data) {
         cell.innerHTML = excelRows[i].Gender;
 
         cell = row.insertCell(-1);
-        cell.innerHTML = excelRows[i].CallAllowance;
+        cell.innerHTML = excelRows[i]["Call Allowance"];
 
         cell = row.insertCell(-1);
-        cell.innerHTML = excelRows[i].TransportAllowance;
+        cell.innerHTML = excelRows[i]["Transport Allowance"];
     }
 
-    const dvExcel = document.getElementById("dvExcel");
+    const dvExcel = document.getElementById("Excel-div");
     dvExcel.innerHTML = "";
     dvExcel.appendChild(table);
 };
+
+function displaySection() {
+    const firstSection = document.getElementById("section-1");
+    const secondSection = document.getElementById("section-2");
+
+    if (secondSection.style.display === "none") {
+         secondSection.style.display = "block";
+        firstSection.style.display= "none";
+    } else {
+        secondSection.style.display = "none";
+        firstSection.style.display = "block";
+    }
+}
+
+function save() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://httpbin.org/anything", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+       value: value
+    }));
+     alert("file saved");   
+}
