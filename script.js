@@ -45,7 +45,6 @@ function processExcel(data) {
 
     //Read all rows from First Sheet into an JSON array.
     const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
-    console.log('header check', checkHeader(excelRows))
     if(!checkHeader(excelRows)){
         alert("please upload excel file that matches the headers")
         return;
