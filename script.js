@@ -45,6 +45,11 @@ function processExcel(data) {
 
     //Read all rows from First Sheet into an JSON array.
     const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+    console.log('header check', checkHeader(excelRows))
+    if(!checkHeader(excelRows)){
+        alert("please upload excel file that matches the headers")
+        return;
+    }
 
     //Create a HTML Table element.
     const table = document.createElement("table");
@@ -93,14 +98,6 @@ function processExcel(data) {
     headerCell = document.createElement("th");
     headerCell.innerHTML = "Transport Allowance";
     row.appendChild(headerCell);
-     
-    //check if the headers match the headers of the csv file
-    // if(headerCell.innerText !== "Fullname" && "Phone Number" && "Address" && "State" && "LGA" && "Date of Birth" && "Salary" 
-    // && "Gender" && "Call Allowance" && "Transport Allowance") {
-    //     alert("please upload excel file that matches the headers")
-    //     return null;
-    // }
-    
 
     //Add the data rows from Excel file.
     for (let i = 0; i < excelRows.length; i++) {
@@ -144,6 +141,27 @@ function processExcel(data) {
     dvExcel.appendChild(table);
 };
 
+function checkHeader (data){
+    let check = false;
+    for (let head of data){
+        if(head["Address"] !== undefined && 
+        head["Call Allowance"] !== undefined && 
+        head["Date of Birth"] !== undefined  && 
+        head["Transport Allowance"] !== undefined  &&
+         head["Gender"] !== undefined  && 
+         head["State"] !== undefined &&
+         head["Fullname"] !== undefined &&
+         head["Phone Number"] !== undefined &&
+         head["Salary"] !== undefined &&
+          head["LGA"] !== undefined){
+            check = true
+        } else {
+            return false;
+        }
+    }
+    return check;
+}
+
 function displaySection() {
     const firstSection = document.getElementById("section-1");
     const secondSection = document.getElementById("section-2");
@@ -158,11 +176,18 @@ function displaySection() {
 }
 
 function save() {
+    const fileUpload = document.getElementById("file-upload");
+    const value = fileUpload.files[0];
     let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log('Response: ', xhr.responseText)
+            alert("file saved");  
+        }
+    }
     xhr.open("POST", "https://httpbin.org/anything", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
        value: value
     }));
-     alert("file saved");   
 }
